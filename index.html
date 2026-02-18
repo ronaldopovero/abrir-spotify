@@ -6,21 +6,23 @@
   <title>Abrindo Spotify…</title>
 </head>
 <body>
-  <p>Abrindo Spotify…</p>
+<script>
+  (function () {
+    // 1) dispara o protocolo
+    // (use spotify: para abrir o app; se quiser algo específico, dá pra usar spotify:search:, etc.)
+    location.href = "spotify:";
 
-  <script>
-    // Permite criar vários botões no Notion passando ?uri=...
-    // Ex.: ?uri=spotify%3Aplaylist%3A37i9dQZF1DXcBWIGoYBM5M
-    const params = new URLSearchParams(location.search);
-    const uri = params.get("uri") || "spotify:";
+    // 2) tenta fechar a aba agressivamente por ~2s
+    const started = Date.now();
+    const timer = setInterval(() => {
+      try { window.open("", "_self"); } catch (e) {}
+      try { window.close(); } catch (e) {}
 
-    // Tenta abrir o app
-    window.location.href = uri;
+      if (Date.now() - started > 2000) clearInterval(timer);
+    }, 100);
+  })();
+</script>
 
-    // Fallback: abre o web player se o protocolo falhar
-    setTimeout(() => {
-      if (!uri.startsWith("http")) window.location.href = "https://open.spotify.com/";
-    }, 900);
-  </script>
+<noscript>Ative o JavaScript para abrir o Spotify.</noscript>
 </body>
 </html>
