@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Abrindo Spotify…</title>
+</head>
+<body>
+  <p>Abrindo Spotify…</p>
+
+  <script>
+    // Permite criar vários botões no Notion passando ?uri=...
+    // Ex.: ?uri=spotify%3Aplaylist%3A37i9dQZF1DXcBWIGoYBM5M
+    const params = new URLSearchParams(location.search);
+    const uri = params.get("uri") || "spotify:";
+
+    // Tenta abrir o app
+    window.location.href = uri;
+
+    // Fallback: abre o web player se o protocolo falhar
+    setTimeout(() => {
+      if (!uri.startsWith("http")) window.location.href = "https://open.spotify.com/";
+    }, 900);
+  </script>
+</body>
+</html>
